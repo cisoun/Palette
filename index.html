@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Palette</title>
+		<style rel="stylesheet" type="text/css">
+			:root, html {
+				--fg: var(--purplade-3);
+				--bg: var(--purplade-9);
+				--separator: var(--purplade-7);
+			}
+
+			 html.dark {
+				--fg: var(--purplade-5);
+				--bg: var(--purplade-0);
+				--separator: var(--purplade-2);
+			}
+
+			body {
+				background: var(--bg);
+				border: 0;
+				color: var(--fg);
+				font-family: 'Helvetica', sans-serif;
+				line-height: 1;
+				margin: 0;
+				padding: 0;
+			}
+
+			svg path {
+				stroke-linecap: round;
+				stroke-linejoin: round;
+				stroke-width: 1.4;
+				stroke: var(--fg);
+			}
+
+			#app {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				position: absolute;
+				width: 100%;
+			}
+
+			#menu {
+				align-items: center;
+				border-bottom: 1px solid var(--separator);
+				display: flex;
+				height: 3rem;
+				gap: 1rem;
+				padding: 0.5rem 3rem;
+			}
+			#menu > span {
+				flex-grow: 1;
+				font-size: 1.6rem;
+				font-weight: 100;
+				padding-top: 0.3rem;
+			}
+			#menu > svg {
+				height: 1.4rem;
+			}
+			#menu button {
+				/*aspect-ratio: 1;*/
+				background: unset;
+				border-radius: 1.25rem;
+				border: 0;
+				color: unset;
+				cursor: pointer;
+				display: flex;
+				height: 2.5rem;
+				min-width: 2.5rem;
+				padding: 0.5rem;
+			}
+			#menu button:hover {
+				background-color: var(--fg);
+			}
+			#menu button:hover > svg > path  {
+				stroke: var(--bg);
+			}
+			#menu button > svg {
+				height: 1.5rem;
+				min-width: 1.5rem;
+			}
+
+			#notification {
+				max-width: 2.5rem;
+				overflow: hidden;
+				transition: all 0.5s;
+			}
+			#notification.open {
+				background: var(--fg);
+				color: var(--bg);
+				max-width: 1000rem;
+			}
+			#notification.open > svg > path {
+				stroke: var(--bg);
+			}
+			#notification > span {
+				line-height: 1.5rem;
+				padding: 0rem 0.5rem;
+			}
+
+			#controls { }
+			#palette {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				gap: 5px;
+				padding: 2rem;
+			}
+			#palette > div {
+				display: flex;
+				flex-direction: row;
+				height: 100%;
+			}
+			#palette .color {
+				aspect-ratio: 1;
+				cursor: pointer;
+				transition: transform 0.05s;
+			}
+			#palette .color:hover {
+				transform: scale(1.1);
+			}
+			#palette > div > div:first-child {
+				align-items: center;
+				aspect-ratio: unset;
+				display: flex;
+				font-size: 0.7rem;
+				justify-content: end;
+				padding: 0 1rem;
+				width: 100px;
+			}
+		</style>
+		<script src="color.js"></script>
+		<script src="app.js" defer></script>
+	</head>
+	<body>
+		<div id="app">
+			<div id="menu">
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" ><path d="M12 14.5a6 6 0 100-12 6 6 0 000 12z" stroke="#000000" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 21.5a6 6 0 100-12 6 6 0 000 12z" stroke="#000000" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 21.5a6 6 0 100-12 6 6 0 000 12z"></path></svg>
+				<span>Palette</span>
+				<button id="notification">
+					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.134 11C18.715 16.375 21 18 21 18H3s3-2.133 3-9.6c0-1.697.632-3.325 1.757-4.525C8.883 2.675 10.41 2 12 2c.337 0 .672.03 1 .09M19 8a3 3 0 100-6 3 3 0 000 6zM13.73 21a1.999 1.999 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+					<span id="message"></span>
+				</button>
+				<button id="dark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 11.507a9.493 9.493 0 0018 4.219c-8.507 0-12.726-4.22-12.726-12.726A9.494 9.494 0 003 11.507z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+			</div>
+			<div id="palette"></div>
+		</div>
+	</body>
+</html>
