@@ -79,25 +79,34 @@ const App = {
 		this.palette = Palette.create(COLORS, LEVELS);
 
 		App.ui.palette.replaceChildren();
+		const row = document.createElement('div');
+		const column = document.createElement('div');
+		row.appendChild(column);
+		for (let i = 0; i < LEVELS.length; i++) {
+			const column = document.createElement('div');
+			column.innerHTML = i;
+			row.appendChild(column);
+		}
+		App.ui.palette.appendChild(row);
 
 		for (const color in this.palette) {
 			const levels = this.palette[color];
 
-			const column = document.createElement('div');
+			const row = document.createElement('div');
 
 			const title = document.createElement('div');
 			title.innerHTML = color;
-			column.appendChild(title);
+			row.appendChild(title);
 
 			for (const [i, value] of levels.entries()) {
 				App.setCSSColor(`${color}-${i}`, value);
-				const row = document.createElement('div');
-				row.classList.add('color');
-				row.onclick = () => this.copyColor(value);
-				row.style.backgroundColor = `var(--${color}-${i})`;
-				column.appendChild(row);
+				const column = document.createElement('div');
+				column.classList.add('color');
+				column.onclick = () => this.copyColor(value);
+				column.style.backgroundColor = `var(--${color}-${i})`;
+				row.appendChild(column);
 			}
-			App.ui.palette.appendChild(column);
+			App.ui.palette.appendChild(row);
 		}
 	},
 };

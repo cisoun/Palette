@@ -13,7 +13,7 @@
 			:root, html {
 				--fg: #111;
 				--bg: #fff;
-				--separator: #eee;
+				--separator: #ddd;
 			}
 
 			 html.dark {
@@ -40,6 +40,12 @@
 			}
 
 			button { font-family: inherit; }
+
+			.vbox {
+				display: flex;
+				flex-direction: row;
+			}
+			.vbox > div { width: 100%; }
 
 			#app {
 				display: flex;
@@ -111,17 +117,29 @@
 			#palette {
 				display: flex;
 				flex-direction: column;
-				flex-grow: 1;
 				gap: 5px;
 				padding: 2rem;
+				max-width: 600px;
 			}
 			#palette > div {
 				display: flex;
 				flex-direction: row;
-				height: 100%;
+				flex-grow: 1;
+			}
+			#palette > div > div:first-child {
+				width: 100px;
+			}
+			#palette > div:first-child > div {
+				display: flex;
+				align-items: end;
+				font-size: 0.8rem;
+				justify-content: center;
+			}
+			#palette > div > div:not(:first-child) {
+				aspect-ratio: 1;
+				flex-grow: 1;
 			}
 			#palette .color {
-				aspect-ratio: 1;
 				cursor: pointer;
 				transition: transform 0.05s;
 			}
@@ -131,12 +149,11 @@
 			/* Color name */
 			#palette > div > div:first-child {
 				align-items: center;
-				aspect-ratio: unset;
+				/*aspect-ratio: unset;*/
 				display: flex;
 				font-size: 0.7rem;
 				justify-content: end;
 				padding: 0 1rem;
-				width: 100px;
 			}
 		</style>
 		<script src="color.js"></script>
@@ -153,7 +170,10 @@
 				</button>
 				<button id="dark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 11.507a9.493 9.493 0 0018 4.219c-8.507 0-12.726-4.22-12.726-12.726A9.494 9.494 0 003 11.507z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
 			</div>
-			<div id="palette"></div>
+			<div class="vbox">
+				<div id="palette"></div>
+				<div id="controls"></div>
+			</div>
 		</div>
 	</body>
 </html>
