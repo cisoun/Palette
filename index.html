@@ -115,43 +115,23 @@
 			}
 
 			#palette {
-				display: flex;
-				flex-direction: column;
-				gap: 5px;
+				display: grid;
+				font-size: 0.6rem;
+				grid-gap: 0.5%;
+				grid-template-columns: auto repeat(10, auto);
 				padding: 2rem;
 				max-width: 600px;
 			}
-			#palette > div {
-				display: flex;
-				flex-direction: row;
-				flex-grow: 1;
-			}
-			#palette > div > div:first-child {
-				width: 100px;
-			}
-			#palette > div:first-child > div {
-				display: flex;
-				align-items: end;
-				font-size: 0.8rem;
-				justify-content: center;
-			}
-			#palette > div > div:not(:first-child) {
-				aspect-ratio: 1;
-				flex-grow: 1;
-			}
 			#palette .color {
+				aspect-ratio: 1;
+				border-radius: 10%;
 				cursor: pointer;
-				transition: transform 0.05s;
 			}
-			#palette .color:hover {
-				transform: scale(1.1);
-			}
-			/* Color name */
-			#palette > div > div:first-child {
-				align-items: center;
-				/*aspect-ratio: unset;*/
+			#palette .color:hover { transform: scale(1.1); }
+			#palette .level { text-align: center; }
+			#palette .name {
 				display: flex;
-				font-size: 0.7rem;
+				align-items: center;
 				justify-content: end;
 				padding: 0 1rem;
 			}
