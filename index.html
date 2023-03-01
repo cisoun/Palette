@@ -4,15 +4,15 @@
 		<title>Palette</title>
 		<style rel="stylesheet" type="text/css">
 			:root, html {
-				--fg: var(--purplade-3);
-				--bg: var(--purplade-9);
-				--separator: var(--purplade-7);
+				--fg: #111;
+				--bg: #fff;
+				--separator: #eee;
 			}
 
 			 html.dark {
-				--fg: var(--purplade-5);
-				--bg: var(--purplade-0);
-				--separator: var(--purplade-2);
+				--fg: #eee;
+				--bg: #111;
+				--separator: #333;
 			}
 
 			body {
@@ -32,6 +32,8 @@
 				stroke: var(--fg);
 			}
 
+			button { font-family: inherit; }
+
 			#app {
 				display: flex;
 				flex-direction: column;
@@ -48,9 +50,10 @@
 				gap: 1rem;
 				padding: 0.5rem 3rem;
 			}
+			/* Title */
 			#menu > span {
 				flex-grow: 1;
-				font-size: 1.6rem;
+				font-size: 1.4rem;
 				font-weight: 100;
 				padding-top: 0.3rem;
 			}
@@ -98,7 +101,6 @@
 				padding: 0rem 0.5rem;
 			}
 
-			#controls { }
 			#palette {
 				display: flex;
 				flex-direction: column;
@@ -119,6 +121,7 @@
 			#palette .color:hover {
 				transform: scale(1.1);
 			}
+			/* Color name */
 			#palette > div > div:first-child {
 				align-items: center;
 				aspect-ratio: unset;

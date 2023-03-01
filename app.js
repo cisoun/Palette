@@ -87,7 +87,6 @@ const App = {
 
 			const title = document.createElement('div');
 			title.innerHTML = color;
-			title.style.color = `var(--${color}-3)`;
 			column.appendChild(title);
 
 			for (const [i, value] of levels.entries()) {
