@@ -1,4 +1,4 @@
-const UI = {
+export default UI = {
 	root: document.documentElement,
 
 	create: (args = {}) => {

@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "esbuild js/app.js --bundle --watch  --outfile=palette.js",
+    "prod": "esbuild js/app.js --bundle --minify --outfile=palette.js"
+  },
+  "dependencies": {
+    "esbuild": "0.17.11"
+  }
+}

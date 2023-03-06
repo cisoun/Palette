@@ -1,4 +1,4 @@
-const Color = {
+export default Color = {
 	gamma: function (x) {
 		return x > 0.0031308 ? 1.055 * Math.pow(x, 1 / 2.4) - 0.055 : 12.92 * x;
 	},

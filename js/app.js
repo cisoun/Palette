@@ -1,3 +1,6 @@
+import Color from './color';
+import UI from './ui';
+
 const COLORS = [
 	{ name: 'rosade',    hue: 0.08, chroma: 0.03 },
 	{ name: 'orangeade', hue: 0.18, chroma: 0.02 },
@@ -11,9 +14,9 @@ const COLORS = [
 	{ name: 'lime',      hue: 0.34, chroma: 0.22 },
 	{ name: 'green',     hue: 0.45, chroma: 0.22 },
 	{ name: 'turquoise', hue: 0.52, chroma: 0.22 },
-	{ name: 'water',     hue: 0.58, chroma: 0.22 },
+	{ name: 'cyan',      hue: 0.58, chroma: 0.22 },
 	{ name: 'blue',      hue: 0.7,  chroma: 0.22 },
-	{ name: 'purple',    hue: 0.8,  chroma: 0.22 }
+	{ name: 'purple',    hue: 0.8,  chroma: 0.22 },
 ];
 
 const LEVELS = [
