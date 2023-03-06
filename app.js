@@ -45,66 +45,73 @@ const Palette = {
 };
 
 const App = {
-	ui: {},
+	ui: null,
 	palette: null,
-	root: null,
 	timeout: null,
 
 	init: function () {
-
-		document.querySelectorAll('[id]').forEach(e => this.ui[e.id] = e)
-		this.root = document.documentElement;
-		this.ui.dark.onclick = () => this.root.classList.toggle('dark');
+		this.ui = UI.init();
+		this.ui.dark.onclick = () => UI.toggleClass(UI.root, 'dark');
 		this.update();
 	},
 
 	copyColor: function (value) {
-		this.ui.message.innerHTML = `Copied ${value}`;
-		this.ui.notification.classList.add('open');
-
 		navigator.clipboard.writeText(value);
+		this.notify(`Copied ${value}`);
+	},
+
+	notify: function (message) {
+		this.ui.message.html = message;
+		this.ui.notification.class = 'open';
 
 		clearTimeout(this.timeout);
 
 		this.timeout = setTimeout(() => {
-			this.ui.notification.classList.remove('open');
+			this.ui.notification.removeClass('open');
 		}, 3000);
 	},
 
-	setCSSColor: function (name, value) {
-		this.root.style.setProperty(`--${name}`, value);
-	},
-
 	update: function () {
+		const palette = this.ui.palette;
+
 		this.palette = Palette.create(COLORS, LEVELS);
 
-		App.ui.palette.replaceChildren();
-
-		App.ui.palette.appendChild(document.createElement('div'));
+		palette.clear();
+		palette.addChild(UI.Element());
 
 		for (let i = 0; i < LEVELS.length; i++) {
-			const level = document.createElement('div');
-			level.innerHTML = i;
-			level.classList.add('level');
-			App.ui.palette.appendChild(level);
+			palette.addChild(UI.create({
+				html: i.toString(),
+				klass: 'level'
+			}));
 		}
+
+		palette.addChild(UI.Element());
 
 		for (const color in this.palette) {
 			const levels = this.palette[color];
 
-			const title = document.createElement('div');
-			title.innerHTML = color;
-			title.classList.add('name');
-			App.ui.palette.appendChild(title);
+			palette.addChild(UI.create({
+				html: color,
+				klass: 'name'
+			}));
 
 			for (const [i, value] of levels.entries()) {
-				App.setCSSColor(`${color}-${i}`, value);
-				const cell = document.createElement('div');
-				cell.classList.add('color');
+				UI.setVariable(`${color}-${i}`, value);
+
+				const cell   = UI.Element();
+				cell.class   = 'color';
 				cell.onclick = () => this.copyColor(value);
 				cell.style.backgroundColor = `var(--${color}-${i})`;
-				App.ui.palette.appendChild(cell);
+
+				palette.addChild(cell);
 			}
+
+			const button   = UI.Button();
+			button.html    = '<svg viewBox="0 0 24 24"><use href="#iconMoreVert"></svg>';
+			button.onclick = () => this.copyColors();
+
+			palette.addChild(button);
 		}
 	},
 };

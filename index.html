@@ -10,6 +10,10 @@
 		<style rel="stylesheet" type="text/css">
 			@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@500&display=swap');
 
+			@media only screen and (max-width: 600px) {
+				#controls { display: none; }
+			}
+
 			:root, html {
 				--fg: #111;
 				--bg: #fff;
@@ -33,19 +37,37 @@
 			}
 
 			svg path {
+				fill: none;
 				stroke-linecap: round;
 				stroke-linejoin: round;
 				stroke-width: 1.4;
 				stroke: var(--fg);
 			}
 
-			button { font-family: inherit; }
-
-			.vbox {
-				display: flex;
-				flex-direction: row;
+			button {
+				background: unset;
+				border: 0;
+				cursor: pointer;
+				font-family: inherit;
 			}
-			.vbox > div { width: 100%; }
+			button:hover { background-color: var(--fg); }
+			button:hover > svg  { stroke: var(--bg); }
+			button > svg {
+				fill: none;
+				stroke: var(--fg);
+				height: 1.5rem;
+				min-width: 1.5rem;
+			}
+
+			.box {
+				display: flex;
+				flex-direction: row;P
+				height: 100%;
+			}
+			.box > div { padding: 2rem; width: 100%; }
+			.box > div:not(:last-child) {
+				border-right: 1px solid var(--separator);
+			}
 
 			#app {
 				display: flex;
@@ -74,7 +96,6 @@
 				height: 1.4rem;
 			}
 			#menu button {
-				/*aspect-ratio: 1;*/
 				background: unset;
 				border-radius: 1.25rem;
 				border: 0;
@@ -90,10 +111,6 @@
 			}
 			#menu button:hover > svg > path  {
 				stroke: var(--bg);
-			}
-			#menu button > svg {
-				height: 1.5rem;
-				min-width: 1.5rem;
 			}
 
 			#notification {
@@ -118,9 +135,23 @@
 				display: grid;
 				font-size: 0.6rem;
 				grid-gap: 0.5%;
-				grid-template-columns: auto repeat(10, auto);
-				padding: 2rem;
-				max-width: 600px;
+				grid-template-columns: auto repeat(10, 40px) 24px;
+				height: fit-content;
+			}
+			#palette button {
+				align-items: center;
+				aspect-ratio: 1;
+				border: 0;
+				border-radius: 100%;
+				display: flex;
+				height: 100%;
+				justify-content: center;
+				margin: 0;
+				padding: 0;
+			}
+			#palette button svg {
+				height: 60%;
+				width: 60%;
 			}
 			#palette .color {
 				aspect-ratio: 1;
@@ -137,12 +168,22 @@
 			}
 		</style>
 		<script src="color.js"></script>
+		<script src="ui.js"></script>
 		<script src="app.js" defer></script>
 	</head>
 	<body>
+		<svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+			<g id="iconCopy">
+				<path d="M19.4 20H9.6a.6.6 0 01-.6-.6V9.6a.6.6 0 01.6-.6h9.8a.6.6 0 01.6.6v9.8a.6.6 0 01-.6.6z" stroke-linecap="round" stroke-linejoin="round"></path>
+				<path d="M15 9V4.6a.6.6 0 00-.6-.6H4.6a.6.6 0 00-.6.6v9.8a.6.6 0 00.6.6H9" stroke-linecap="round" stroke-linejoin="round"></path>
+			</g>
+			<g id="iconMoreVert">
+				<path d="M12 12.5a.5.5 0 100-1 .5.5 0 000 1zM12 18.5a.5.5 0 100-1 .5.5 0 000 1zM12 6.5a.5.5 0 100-1 .5.5 0 000 1z"  stroke-linecap="round" stroke-linejoin="round"></path>
+			</g>
+		</svg>
 		<div id="app">
 			<div id="menu">
-				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" ><path d="M12 14.5a6 6 0 100-12 6 6 0 000 12z" stroke="#000000" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 21.5a6 6 0 100-12 6 6 0 000 12z" stroke="#000000" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 21.5a6 6 0 100-12 6 6 0 000 12z"></path></svg>
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" ><path d="M12 14.5a6 6 0 100-12 6 6 0 000 12z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 21.5a6 6 0 100-12 6 6 0 000 12z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 21.5a6 6 0 100-12 6 6 0 000 12z"></path></svg>
 				<span>Palette</span>
 				<button id="notification">
 					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.134 11C18.715 16.375 21 18 21 18H3s3-2.133 3-9.6c0-1.697.632-3.325 1.757-4.525C8.883 2.675 10.41 2 12 2c.337 0 .672.03 1 .09M19 8a3 3 0 100-6 3 3 0 000 6zM13.73 21a1.999 1.999 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -150,9 +191,9 @@
 				</button>
 				<button id="dark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 11.507a9.493 9.493 0 0018 4.219c-8.507 0-12.726-4.22-12.726-12.726A9.494 9.494 0 003 11.507z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
 			</div>
-			<div class="vbox">
+			<div class="box">
 				<div id="palette"></div>
-				<div id="controls"></div>
+				<div id="controls">test</div>
 			</div>
 		</div>
 	</body>
