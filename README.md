@@ -22,3 +22,8 @@ npm run dev
 # Production
 npm run prod
 ```
+
+## Deployment
+
+Once built, serve [index.html](index.html) and [palette.js](palette.js)
+in your desired location.
